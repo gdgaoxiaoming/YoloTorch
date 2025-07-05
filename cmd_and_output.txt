@@ -1,0 +1,81 @@
+yolo task=detect mode=train data=data.yaml model=yolov8n.yaml epochs=100 imgsz=640
+
+
+
+-------------------------------------------------------------------------------------------------
+#yolo train and out put
+yolo mode=train data=data.yaml model=yolov8n.yaml
+
+
+      Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
+    100/100       2.2G     0.9743     0.7392      1.582          4        640: 100%|██████████| 4/4 [00:00<00:00
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100%|██████████| 1/1 [
+                   all         10         40      0.998          1      0.995       0.78
+
+100 epochs completed in 0.038 hours.
+Optimizer stripped from runs/detect/train3/weights/last.pt, 6.2MB
+Optimizer stripped from runs/detect/train3/weights/best.pt, 6.2MB
+
+Validating runs/detect/train3/weights/best.pt...
+Ultralytics 8.3.162 🚀  Python-3.11.13 torch-2.6.0+cu124 CUDA:0 (Tesla T4, 15095MiB)
+YOLOv8n summary (fused): 72 layers, 3,005,843 parameters, 0 gradients, 8.1 GFLOPs
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100%|██████████| 1/1 [
+                   all         10         40      0.998          1      0.995       0.78
+Speed: 0.1ms preprocess, 2.8ms inference, 0.0ms loss, 1.8ms postprocess per image
+Results saved to runs/detect/train3
+💡  Learn more at https://docs.ultralytics.com/modes/train
+
+
+#训练输出：训练触发早停机制，1万张图片训练4轮再116张验证集上正确率已经达到了100%
+#Training output: The training triggers an early stop mechanism, and the accuracy rate has reached 100% on a validation set of 116 images after 4 rounds of training with 10000 images
+/content/drive/MyDrive/YoloTorch# python torch_all.py
+Using device: cuda
+/usr/local/lib/python3.11/dist-packages/torch/utils/data/dataloader.py:624: UserWarning: This DataLoader will create 4 worker processes in total. Our suggested max number of worker in current system is 2, which is smaller than what this DataLrker processes in total. Our suggested max number of worker in current system is 2, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+Train samples: 11996
+Validation samples: 116
+CharRecognitionModel(
+  (conv1): Conv2d(1, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (relu1): ReLU()
+  (pool1): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+  (conv2): Conv2d(16, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (relu2): ReLU()
+  (pool2): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+  (flatten): Flatten(start_dim=1, end_dim=-1)
+  (fc1): Linear(in_features=2016, out_features=128, bias=True)
+  (relu3): ReLU()
+  (dropout): Dropout(p=0.5, inplace=False)
+  (fc2): Linear(in_features=128, out_features=36, bias=True)
+)
+/usr/local/lib/python3.11/dist-packages/torch/optim/lr_scheduler.py:62: UserWarning: The verbose parameter is deprecated. Please use get_last_lr() to access the learning rate.
+  warnings.warn(
+Epoch 1/60 [Train]:   0%|                             | 0/188 [00:00<?, ?it/s]
+
+-------------------------------------------------------------------------------------------------
+#
+Epoch 1/60 [Train]: 100%|█| 188/188 [02:13<00:00,  1.41it/s, acc=0.757, loss=0
+Epoch 1/60 [Validation]: 100%|██████████████████| 2/2 [00:52<00:00, 26.06s/it]
+Epoch 1/60
+Train Loss: 0.9151 | Train Acc: 0.7566
+Val Loss: 0.0151 | Val Acc: 1.0000
+New best model saved with val acc: 1.0000
+Epoch 2/60 [Train]: 100%|██████████████████████████████████████| 188/188 [00:31<00:00,  5.94it/s, acc=0.981, loss=0.0305]
+Epoch 2/60 [Validation]: 100%|█████████████████████████████████████████████████████████████| 2/2 [00:00<00:00,  3.93it/s]
+Epoch 2/60
+Train Loss: 0.0801 | Train Acc: 0.9810
+Val Loss: 0.0027 | Val Acc: 1.0000
+No improvement for 1 epochs
+Epoch 3/60 [Train]: 100%|█████████████████████████████████████| 188/188 [00:32<00:00,  5.80it/s, acc=0.988, loss=0.00496]
+Epoch 3/60 [Validation]: 100%|█████████████████████████████████████████████████████████████| 2/2 [00:00<00:00,  3.89it/s]
+Epoch 3/60
+Train Loss: 0.0411 | Train Acc: 0.9882
+Val Loss: 0.0012 | Val Acc: 1.0000
+No improvement for 2 epochs
+Epoch 4/60 [Train]: 100%|███████████████████████████████████████| 188/188 [00:31<00:00,  5.99it/s, acc=0.99, loss=0.0171]
+Epoch 4/60 [Validation]: 100%|█████████████████████████████████████████████████████████████| 2/2 [00:00<00:00,  3.15it/s]
+Epoch 4/60
+Train Loss: 0.0394 | Train Acc: 0.9901
+Val Loss: 0.0010 | Val Acc: 1.0000
+No improvement for 3 epochs
+Early stopping after 4 epochs
+Final model saved
